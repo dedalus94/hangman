@@ -4,7 +4,7 @@ word_list=['banana','apple','blueberries','raspberries','peach']
 print(word_list)
 
 word=random.choice(word_list)
-print(word)
+#print(word)
 
 guess=input("please insert a letter:")
 
@@ -18,4 +18,13 @@ while True:
 
     else: 
 
-        print("Oops! That is not a valid input.")
+        print("Invalid letter. Please, enter a single alphabetical character.")
+
+
+if guess in word: 
+
+    print(f"Good guess! {guess} is in the word.")
+
+else: 
+
+    print(f"Sorry, {guess} is not in the word. Try again.")
