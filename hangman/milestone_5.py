@@ -2,9 +2,9 @@ import random
 
 class Hangman: 
 
-    def __init__(self,word_list):
+    def __init__(self,word_list,num_lives):
 
-        self.num_lives = 5 
+        self.num_lives = num_lives 
         self.word_list = word_list 
         self.word = random.choice(self.word_list)
         self.word_guessed = ['_']*len(self.word)
@@ -26,13 +26,16 @@ class Hangman:
 
             print(f"Good guess! {guess} is in the word.")
 
-            for idx, letter in enumerate(word):
+            for idx, letter in enumerate(self.word):
 
                 if letter==guess: 
 
+                    print(idx,self.word_guessed)
                     self.word_guessed[idx]==guess
+                    print(self.word_guessed)
             
             self.num_letters-=1
+            print(self.word_guessed)
 
         else: 
 
@@ -46,38 +49,46 @@ class Hangman:
     def ask_for_input(self):
 
         """ Ask for user's input """
-
-        while True: 
             
-            guess=input("please guess a letter:") 
+        guess=input("please guess a letter:") 
 
-            if not (len(guess)==1 and guess.isalpha()):
+        if not (len(guess)==1 and guess.isalpha()):
 
-                print("Invalid letter. Please, enter a single alphabetical character.")
+            print("Invalid letter. Please, enter a single alphabetical character.")
 
-            elif guess in self.list_of_guesses:
+        elif guess in self.list_of_guesses:
 
-                print("You already tried that letter!")
+            print("You already tried that letter!")
 
-            else: 
+        else: 
 
-                self.check_guess(guess)
-
-
-
-hm=Hangman(['apple','banana','orange','melon'])
-
-hm.ask_for_input()
-                
+            self.check_guess(guess)
 
 
-print(hm.num_live)
-print(hm.word_list)
-print(hm.word)
-print(hm.word_guessed)
-print(hm.num_letters)
-print(hm.list_of_guesses) 
+def play_game(word_list):
+
+    num_lives = 5 
+    game = Hangman(word_list,num_lives)
+
+    while True: 
+
+        if num_lives==0: 
+
+            print("you lost!")
+            break
+
+        if game.num_letters > 0: 
+
+            game.ask_for_input()
+
+            if num_lives>0 and game.num_letters==0:
+
+                print("You won the game!")
+                break
 
 
 
+play_game(['apple','banana','orange','melon'])
 
+
+        
